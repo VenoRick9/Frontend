@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import api from "../api";
 import { CartContext } from "../context/CartContext";
-import "../Items.css";
+import "../css/Items.css";
 
 
 export default function Items() {

@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import "../Header.css";
+import "../css/Header.css";
 
 export default function Header() {
   const location = useLocation();
@@ -11,7 +11,7 @@ export default function Header() {
     return null;
   }
 
-  // Считаем общее количество товаров
+
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (

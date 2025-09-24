@@ -4,7 +4,7 @@ import Register from "./pages/Register";
 import Items from "./pages/Items";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
-//import Profile from "./pages/Profile";
+import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import ProtectedRoute from "./ProtectedRoute";
 import { CartProvider } from "./context/CartContext";
@@ -22,7 +22,7 @@ function App() {
             <Route path="/items" element={<Items />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/orders" element={<Orders />} />
-            {/* <Route path="/profile" element={<Profile />} /> */}
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/login" replace />} />
