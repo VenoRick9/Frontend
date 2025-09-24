@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../api";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { enGB } from "date-fns/locale";
+import TextField from "@mui/material/TextField";
 
 export default function Register() {
   const [step, setStep] = useState(1);
@@ -29,14 +35,39 @@ export default function Register() {
 
   const handleBack = () => setStep(1);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.name || !formData.surname || !formData.birthDate) {
       alert("Please fill in all fields");
       return;
     }
-    console.log("Register:", formData);
-    // TODO: API запрос для регистрации
+    try {
+      // const formattedData = {
+      //   ...formData,
+      //   birthDate: new Date(formData.birthDate).toISOString().split("T")[0],
+      // };
+      const response = await api.post("/auth/registration", formData);
+
+      const { accessToken, refreshToken } = response.data;
+
+
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+
+
+      window.location.href = "/orders";
+  } catch (error) {
+    if (error.response) {
+      alert(
+        `Error: ${
+          error.response.data.message || "Unable to complete registration"
+        }`
+      );
+    } else {
+      alert("Failed to connect to the server");
+    }
+    console.error("Registration error:", error);
+  }
   };
 
   return (
@@ -128,14 +159,21 @@ export default function Register() {
 
               <div className="mb-3 text-start">
                 <label className="form-label">Birth Date</label>
-                <input
-                  type="date"
-                  name="birthDate"
-                  className="form-control"
-                  value={formData.birthDate}
-                  onChange={handleChange}
-                  required
-                />
+                <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
+                  <DatePicker
+                    value={formData.birthDate ? new Date(formData.birthDate) : null}
+                    onChange={(date) =>
+                      setFormData({
+                        ...formData,
+                        birthDate: date ? date.toISOString().split("T")[0] : "",
+                      })
+                    }
+                    format="dd/MM/yyyy"
+                    slotProps={{
+                      textField: { fullWidth: true, required: true },
+                    }}
+                  />
+                </LocalizationProvider>
               </div>
 
               <div className="d-flex justify-content-between">

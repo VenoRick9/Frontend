@@ -1,15 +1,39 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../api";
 
 export default function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login:", { login, password });
-    // TODO: API запрос для логина
+
+    try {
+      const response = await api.post("/auth/login", {
+        login,
+        password,
+      });
+
+      const { accessToken, refreshToken } = response.data;
+
+
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+
+      window.location.href = "/orders";
+    } catch (error) {
+      if (error.response) {
+        alert(
+          `Error: ${error.response.data.message || "Wrong login or password"}`
+        );
+      } else {
+        alert("Something wrong with connection");
+      }
+    }
   };
+
+
 
   return (
     <div
