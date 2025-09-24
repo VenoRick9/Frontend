@@ -8,6 +8,15 @@ export default function Items() {
   const [items, setItems] = useState([]);
   const { addToCart } = useContext(CartContext);
 
+    const [clickedId, setClickedId] = useState(null);
+
+  const handleAddToCart = (itemId) => {
+    const item = items.find(i => i.id === itemId);
+    addToCart(item);
+    setClickedId(itemId);
+    setTimeout(() => setClickedId(null), 300);
+  };
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -31,8 +40,8 @@ export default function Items() {
                 <h5 className="card-title">{item.name}</h5>
                 <p className="card-text">${item.price.toFixed(2)}</p>
                 <button
-                  className="btn-add-green mt-auto"
-                  onClick={() => addToCart(item)}
+                    className={`btn-add-green mt-auto ${clickedId === item.id ? "clicked" : ""}`}
+                    onClick={() => handleAddToCart(item.id)}
                 >
                   Add to Cart
                 </button>
