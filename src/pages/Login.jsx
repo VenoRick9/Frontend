@@ -21,7 +21,7 @@ export default function Login() {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
 
-      window.location.href = "/orders";
+      window.location.href = "/items";
     } catch (error) {
       if (error.response) {
         alert(

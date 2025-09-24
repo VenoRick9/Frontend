@@ -42,10 +42,7 @@ export default function Register() {
       return;
     }
     try {
-      // const formattedData = {
-      //   ...formData,
-      //   birthDate: new Date(formData.birthDate).toISOString().split("T")[0],
-      // };
+
       const response = await api.post("/auth/registration", formData);
 
       const { accessToken, refreshToken } = response.data;
@@ -55,7 +52,7 @@ export default function Register() {
       localStorage.setItem("refreshToken", refreshToken);
 
 
-      window.location.href = "/orders";
+      window.location.href = "/items";
   } catch (error) {
     if (error.response) {
       alert(

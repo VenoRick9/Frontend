@@ -77,6 +77,8 @@ html, body {
 
 #root {
   height: 100%;
+  width: 100%;
+  text-align: center; 
 }
 
 body {
@@ -84,8 +86,9 @@ body {
   color: #212529;        
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
+  
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
 }
 .brand-green {
   color: #28a745;
@@ -101,10 +104,9 @@ body {
   background-color: #218838;
 }
 
-/* Карточка формы */
 .card-custom {
-  background-color: #ffffff; /* белая карточка */
-  border: 1px solid #dee2e6; /* светло-серая рамка */
+  background-color: #ffffff; 
+  border: 1px solid #dee2e6;
   border-radius: 12px;
   padding: 2rem;
 }
