@@ -7,17 +7,7 @@ export default function Orders() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // TODO: заменить URL на ваш API endpoint
-    // axios
-    //   .get("/orders")
-    //   .then((res) => {
-    //     setOrders(res.data);
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     setError("Ошибка при загрузке заказов");
-    //     setLoading(false);
-    //   });
+    // TODO:  API endpoint
   }, []);
 
   if (loading) {
