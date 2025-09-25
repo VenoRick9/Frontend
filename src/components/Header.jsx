@@ -27,6 +27,9 @@ export default function Header() {
         <Link to="/orders" className="btn btn-outline-light me-2">
           Orders
         </Link>
+        <Link to="/payments" className="btn btn-outline-light me-2">
+          Payments
+        </Link>
         <Link to="/cart" className="btn btn-outline-light position-relative">
           Cart
           {totalItems > 0 && (

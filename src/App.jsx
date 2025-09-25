@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import ProtectedRoute from "./ProtectedRoute";
 import { CartProvider } from "./context/CartContext";
+import Payments from "./pages/Payments";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/payments" element={<Payments />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/login" replace />} />
