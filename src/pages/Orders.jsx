@@ -1,3 +1,6 @@
+
+
+
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaReceipt, FaShoppingBag, FaCalendarAlt } from "react-icons/fa";
 import "../css/Orders.css";
@@ -28,7 +31,7 @@ export default function Orders() {
   };
 
   const handlePayOrder = (orderId) => {
-    //TODO
+    console.log("dasd")
   };
 
   const handleItemQuantityChange = (itemId, newQuantity) => {
@@ -124,7 +127,7 @@ export default function Orders() {
       {orders.length === 0 ? (
         <div className="empty-orders">
           <FaReceipt size={64} className="empty-icon" />
-          <h3>No orders yet</h3>
+          <h3>No orders yet</h3>order
           <p>Make your first purchase to see your orders here</p>
         </div>
       ) : (
@@ -171,7 +174,7 @@ export default function Orders() {
                 <div className="order-actions">
                   {order.status === "NEW" && (
                     <button 
-                      className="btn btn-pay"
+                      className="btn-pay"
                       onClick={() => handlePayOrder(order.id)}
                     >
                       Pay
@@ -267,7 +270,7 @@ export default function Orders() {
               <div className="order-summary">
                 <div className="summary-row">
                   <span>Total:</span>
-                  <span className="total-amount">
+                  <span className="total-amount-order">
                     {calculateOrderAmount(editedItems).toFixed(2)} $
                   </span>
                 </div>
@@ -295,3 +298,5 @@ export default function Orders() {
     </div>
   );
 }
+
+

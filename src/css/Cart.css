@@ -77,13 +77,13 @@
 
 .cart-table td {
   padding: 1.2rem 1rem;
+    text-align: center;
   border-bottom: 1px solid #f1f1f1;
 }
 
 .cart-item:hover {
   background: #f8f9fa;
 }
-
 
 .item-col { width: 35%; }
 .price-col { width: 15%; }
@@ -105,7 +105,7 @@
   margin: 0 auto;
 }
 
-.btn-quantity {
+.btn-quantity-cart {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -162,13 +162,12 @@
   font-size: 1.1rem;
 }
 
-
-.btn-remove {
+.btn-remove-cart {
   background: #dc3545;
   color: white;
   border: none;
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -265,3 +264,4 @@
     font-size: 1rem;
   }
 }
+

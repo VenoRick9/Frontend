@@ -1,3 +1,6 @@
+
+
+
 .orders-container {
   max-width: 800px; /* Уменьшил ширину для столбца */
   margin: 0 auto;
@@ -214,7 +217,7 @@
   gap: 0.8rem;
 }
 
-/* Buttons */
+
 .btn {
   padding: 0.5rem 1rem;
   border: none;
@@ -243,8 +246,8 @@
 .btn-edit {
   background: #ffc107;
   color: #212529;
-  width: 44px; 
-  height: 44px;
+  width: 50px; 
+  height: 50px;
   border-radius: 6px;
   font-size: 1.1rem;
 }
@@ -257,8 +260,8 @@
 .btn-delete {
   background: #dc3545;
   color: white;
-  width: 44px; 
-  height: 44px; 
+  width: 50px; 
+  height: 50px; 
   border-radius: 6px;
   font-size: 1.1rem;
 }
@@ -494,8 +497,8 @@
 }
 
 .btn-quantity {
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   border-radius: 6px;
   border: 2px solid #28a745;
   background: white;
@@ -552,8 +555,8 @@
   background: #dc3545;
   color: white;
   border: none;
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -577,9 +580,9 @@
   transform: none;
 }
 
-/* Итоговая сумма */
+
 .order-summary {
-  background: #f8f9fa;
+  background: #d7dad8;
   padding: 1rem;
   border-radius: 8px;
   margin-top: 1.5rem;
@@ -597,9 +600,9 @@
   margin-bottom: 0;
 }
 
-.total-amount {
+.total-amount-order {
   font-size: 1.3rem;
-  color: #28a745;
+  color: #121712;
   font-weight: 700;
 }
 
@@ -609,7 +612,7 @@
 }
 
 .amount-change.negative {
-  color: #dc3545;
+  color: #ef1e1e;
   font-weight: 600;
 }
 
@@ -681,3 +684,5 @@
     font-size: 1.1rem;
   }
 }
+
+

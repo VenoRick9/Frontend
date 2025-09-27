@@ -1,3 +1,8 @@
+
+
+
+
+
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { FaPlus, FaMinus, FaTrash, FaShoppingCart } from "react-icons/fa";
@@ -77,7 +82,7 @@ export default function Cart() {
                     <td className="quantity-controls">
                       <div className="quantity-wrapper">
                         <button
-                          className="btn btn-quantity btn-minus"
+                          className="btn btn-quantity-cart btn-minus"
                           onClick={() => decreaseQuantity(item.id)}
                           disabled={item.quantity <= 1}
                         >
@@ -87,7 +92,7 @@ export default function Cart() {
                           {item.quantity}
                         </span>
                         <button
-                          className="btn btn-quantity btn-plus"
+                          className="btn btn-quantity-cart btn-plus"
                           onClick={() => increaseQuantity(item.id)}
                         >
                           <FaPlus size={12} />
@@ -99,7 +104,7 @@ export default function Cart() {
                     </td>
                     <td className="item-actions">
                       <button
-                        className="btn btn-remove"
+                        className="btn btn-remove-cart"
                         onClick={() => removeFromCart(item.id)}
                         title="Remove item"
                       >
