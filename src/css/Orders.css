@@ -1,8 +1,5 @@
-
-
-
 .orders-container {
-  max-width: 800px; /* Уменьшил ширину для столбца */
+  max-width: 800px; 
   margin: 0 auto;
   padding: 2rem;
 }
@@ -23,7 +20,7 @@
   font-size: 1.1rem;
 }
 
-/* Empty State */
+
 .empty-orders {
   text-align: center;
   padding: 4rem 2rem;
@@ -40,14 +37,12 @@
   margin-bottom: 1rem;
 }
 
-/* Orders Column */
 .orders-column {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-/* Order Card */
 .order-card {
   background: white;
   border-radius: 12px;
@@ -57,7 +52,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 200px; /* Минимальная высота */
+  min-height: 200px; 
 }
 
 .order-card:hover {
@@ -72,7 +67,7 @@
   padding: 1.5rem;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border-bottom: 1px solid #dee2e6;
-  flex-shrink: 0; /* Запрещаем сжатие */
+  flex-shrink: 0; 
 }
 
 .order-info h3 {
@@ -108,7 +103,7 @@
   font-size: 1.2rem;
 }
 
-/* Status Badges */
+
 .status-badge {
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
@@ -207,7 +202,7 @@
   padding: 1.2rem 1.5rem;
   background: #f8f9fa;
   border-top: 1px solid #e9ecef;
-  flex-shrink: 0; /* Запрещаем сжатие */
+  flex-shrink: 0;
 }
 
 .order-actions {
@@ -271,7 +266,7 @@
   transform: scale(1.1);
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .orders-container {
     padding: 1rem;
@@ -298,7 +293,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-    min-height: 70px; /* Увеличиваем высоту на мобильных */
+    min-height: 70px; 
   }
   
   .item-quantity, .item-total {
@@ -323,7 +318,7 @@
   }
   
   .order-card {
-    margin: 0 -0.5rem; /* Немного расширяем на маленьких экранах */
+    margin: 0 -0.5rem; 
   }
 }
 
@@ -331,7 +326,6 @@
 
 
 
-/* Модальное окно */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -403,7 +397,7 @@
   flex-shrink: 0;
 }
 
-/* Стили для скролла модального окна */
+
 .modal-body::-webkit-scrollbar {
   width: 6px;
 }
@@ -422,7 +416,6 @@
   background: #218838;
 }
 
-/* Информация о заказе */
 .edit-order-info {
   background: #f8f9fa;
   padding: 1rem;
@@ -446,7 +439,7 @@
   color: #495057;
 }
 
-/* Редактирование товаров */
+
 .edit-items-section h4 {
   margin: 0 0 1rem 0;
   color: #495057;
@@ -616,7 +609,6 @@
   font-weight: 600;
 }
 
-/* Кнопки модального окна */
 .btn-cancel {
   background: #6c757d;
   color: white;
@@ -649,7 +641,7 @@
   transform: translateY(-1px);
 }
 
-/* Адаптивность модального окна */
+
 @media (max-width: 768px) {
   .modal-content {
     margin: 1rem;

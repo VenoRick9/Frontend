@@ -1,8 +1,3 @@
-
-
-
-
-
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { FaPlus, FaMinus, FaTrash, FaShoppingCart } from "react-icons/fa";

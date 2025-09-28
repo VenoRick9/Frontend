@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from "react";
 export const CartContext = createContext({});
 
 export const CartProvider = ({ children }) => {
-  // загрузка из localStorage при инициализации
+
   const [cart, setCart] = useState(() => {
     try {
       const raw = localStorage.getItem("cart");
@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // синхронизируем cart -> localStorage
+
   useEffect(() => {
     try {
       localStorage.setItem("cart", JSON.stringify(cart));

@@ -5,7 +5,7 @@
   min-height: 100vh;
 }
 
-/* Header Styles */
+
 .payments-header {
   display: flex;
   justify-content: space-between;
@@ -211,7 +211,7 @@
   color: #28a745;
 }
 
-/* Status Badges */
+
 .status-badge {
   display: flex;
   align-items: center;
@@ -249,7 +249,6 @@
 .status-icon.failed { color: #dc3545; }
 .status-icon.pending { color: #ffc107; }
 
-/* Payment Details */
 .payment-details {
   margin-bottom: 1.5rem;
 }
@@ -273,7 +272,6 @@
   font-size: 0.9rem;
 }
 
-/* Payment Actions */
 .payment-actions {
   display: flex;
   gap: 0.8rem;
@@ -318,7 +316,7 @@
   font-size: 0.8rem;
 }
 
-/* Empty State */
+
 .empty-state {
   text-align: center;
   padding: 4rem 2rem;
@@ -335,7 +333,7 @@
   margin-bottom: 1rem;
 }
 
-/* Payments Summary */
+
 .payments-summary {
   text-align: center;
   margin-top: 2rem;
@@ -344,7 +342,7 @@
   border-top: 1px solid #e9ecef;
 }
 
-/* Loading Spinner */
+
 .loading-spinner {
   text-align: center;
   padding: 4rem 2rem;
@@ -365,7 +363,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .payments-container {
     padding: 1rem;
@@ -416,7 +414,6 @@
 }
 
 
-/* Error State */
 .error-state {
   text-align: center;
   padding: 4rem 2rem;
@@ -432,7 +429,7 @@
   margin-bottom: 1rem;
 }
 
-/* Debug Info */
+
 .debug-info {
   font-size: 0.8rem;
   color: #6c757d;
@@ -460,7 +457,6 @@
 }
 
 
-/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -558,7 +554,7 @@
   background: #f8f9fa;
 }
 
-/* Details Sections */
+
 .details-section {
   margin-bottom: 2rem;
   padding: 1.5rem;
@@ -623,7 +619,6 @@
 .status-failed { color: #dc3545; }
 .status-pending { color: #ffc107; }
 
-/* Order Items List */
 .order-items-list {
 margin-top: 0.8rem; 
   margin-bottom: 1rem;
@@ -686,7 +681,7 @@ margin-top: 0.8rem;
   color: white;
 }
 
-/* Cards List */
+
 .cards-list {
 margin-top: 0.8rem; 
 }
@@ -719,7 +714,7 @@ margin-top: 0.8rem;
   font-size: 0.9rem;
 }
 
-/* Modal Scrollbar */
+
 .modal-body::-webkit-scrollbar {
   width: 8px;
 }
@@ -738,7 +733,7 @@ margin-top: 0.8rem;
   background: #218838;
 }
 
-/* Responsive Modal */
+
 @media (max-width: 768px) {
   .modal-overlay {
     padding: 1rem;

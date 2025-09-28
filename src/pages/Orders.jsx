@@ -1,6 +1,4 @@
-
-
-
+import api from "../api";
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaReceipt, FaShoppingBag, FaCalendarAlt } from "react-icons/fa";
 import "../css/Orders.css";
@@ -30,8 +28,27 @@ export default function Orders() {
     }
   };
 
-  const handlePayOrder = (orderId) => {
-    console.log("dasd")
+  const handlePayOrder = async (orderId) => {
+   try {
+    const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+    const orderToPay = savedOrders.find((order) => order.id === orderId);
+
+    const requestBody = {
+      orderItems: orderToPay.items.map((item) => ({
+        itemId: item.itemId,
+        quantity: item.quantity.toString(),
+      })),
+    };
+
+    await api.post("/orders", requestBody);
+
+    const updatedOrders = savedOrders.filter((order) => order.id !== orderId);
+    localStorage.setItem("orders", JSON.stringify(updatedOrders));
+    setOrders(updatedOrders);
+  } catch (error) {
+    console.error("❌ Error creating order:", error);
+    alert("An error occurred while creating the order. Please try again.");
+  }
   };
 
   const handleItemQuantityChange = (itemId, newQuantity) => {
@@ -89,18 +106,7 @@ export default function Orders() {
     setEditedItems([]);
   };
 
-  const getStatusBadge = (status) => {
-    const statusConfig = {
-      "NEW": { class: "status-new", text: "New" },
-      "PAID": { class: "status-paid", text: "Paid" },
-      "PROCESSING": { class: "status-processing", text: "Processing" },
-      "COMPLETED": { class: "status-completed", text: "Completed" },
-      "CANCELLED": { class: "status-cancelled", text: "Cancelled" }
-    };
-    
-    const config = statusConfig[status] || { class: "status-default", text: status };
-    return <span className={`status-badge ${config.class}`}>{config.text}</span>;
-  };
+
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-GB", {
@@ -149,7 +155,7 @@ export default function Orders() {
                       <FaCalendarAlt className="me-1" />
                       {formatDate(order.createdAt)}
                     </span>
-                    {getStatusBadge(order.status)}
+                    
                   </div>
                 </div>
                 <div className="order-amount">
@@ -215,8 +221,7 @@ export default function Orders() {
                   <span>{formatDate(editingOrder.createdAt)}</span>
                 </div>
                 <div className="info-row">
-                  <span className="info-label">Status:</span>
-                  {getStatusBadge(editingOrder.status)}
+                  
                 </div>
               </div>
 

@@ -17,14 +17,14 @@ export default function Payments() {
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [userId, setUserId] = useState(null);
   
-  // Modal states
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [orderDetails, setOrderDetails] = useState(null);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
 
-  // Get userId from access token
+
   useEffect(() => {
     try {
       const token = localStorage.getItem('accessToken');
@@ -42,7 +42,6 @@ export default function Payments() {
     }
   }, []);
 
-  // Fetch payments
   useEffect(() => {
     if (!userId) return;
 
@@ -55,20 +54,7 @@ export default function Payments() {
         setFilteredPayments(response.data);
       } catch (error) {
         console.error('Error fetching payments:', error);
-        setError('Failed to load payments. Please try again.');
-        // Mock data for development
-        const mockPayments = [
-          {
-            "id": "68d2ad567bff0e3cd1ecdf3b",
-            "orderId": 27,
-            "userId": 6,
-            "status": "SUCCESS",
-            "timestamp": "2025-09-25T10:21:02.214",
-            "paymentAmount": 159.94
-          }
-        ];
-        setPayments(mockPayments);
-        setFilteredPayments(mockPayments);
+        
       } finally {
         setIsLoading(false);
       }
@@ -77,20 +63,20 @@ export default function Payments() {
     fetchPayments();
   }, [userId]);
 
-  // View Details handler
+
   const viewDetails = async (payment) => {
     setSelectedPayment(payment);
     setIsLoadingDetails(true);
     setIsModalOpen(true);
     
     try {
-      // Fetch order details
+
       const orderResponse = await api.get(`/orders/${payment.orderId}`);
       setOrderDetails(orderResponse.data);
       
-      // Fetch payment details by orderId
+   
       const paymentResponse = await api.get(`/payments?orderId=${payment.orderId}`);
-      setPaymentDetails(paymentResponse.data[0]); // Take first payment
+      setPaymentDetails(paymentResponse.data[0]); 
     } catch (error) {
       console.error('Error fetching details:', error);
       setError('Failed to load details');
@@ -106,7 +92,7 @@ export default function Payments() {
     setPaymentDetails(null);
   };
 
-  // Filter payments based on search and status
+
   useEffect(() => {
     let result = payments;
 
@@ -282,7 +268,6 @@ export default function Payments() {
         )}
       </div>
 
-      {/* Details Modal */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -304,7 +289,7 @@ export default function Payments() {
                 </div>
               ) : (
                 <>
-                  {/* Payment Information */}
+  
                   <section className="details-section">
                     <h3><FaMoneyCheckAlt className="section-icon" />Payment Information</h3>
                     <div className="details-grid">
@@ -330,7 +315,7 @@ export default function Payments() {
                     </div>
                   </section>
 
-                  {/* Order Information */}
+ 
                   <section className="details-section">
                     <h3><FaBox className="section-icon" />Order Information</h3>
                     <div className="details-grid">
