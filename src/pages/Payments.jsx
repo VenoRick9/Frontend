@@ -29,6 +29,7 @@ export default function Payments() {
 
 
 
+
   useEffect(() => {
     try {
       const token = localStorage.getItem('accessToken');
@@ -40,7 +41,7 @@ export default function Payments() {
         setIsLoading(false);
       }
     } catch (error) {
-      console.error('Error decoding token:', error);
+      handleApiError(error, 'Error decoding token');
       setError('Invalid token');
       setIsLoading(false);
     }
@@ -57,8 +58,7 @@ export default function Payments() {
         setPayments(response.data);
         setFilteredPayments(response.data);
       } catch (error) {
-        console.error('Error fetching payments:', error);
-        
+        handleApiError(error, 'Error fetching payments');
       } finally {
         setIsLoading(false);
       }
@@ -67,22 +67,19 @@ export default function Payments() {
     fetchPayments();
   }, [userId]);
 
-
   const viewDetails = async (payment) => {
     setSelectedPayment(payment);
     setIsLoadingDetails(true);
     setIsModalOpen(true);
     
     try {
-
       const orderResponse = await api.get(`/orders/${payment.orderId}`);
       setOrderDetails(orderResponse.data);
       
-   
       const paymentResponse = await api.get(`/payments?orderId=${payment.orderId}`);
       setPaymentDetails(paymentResponse.data[0]); 
     } catch (error) {
-      console.error('Error fetching details:', error);
+      handleApiError(error, 'Error fetching payment details');
       setError('Failed to load details');
     } finally {
       setIsLoadingDetails(false);
@@ -95,7 +92,6 @@ export default function Payments() {
     setOrderDetails(null);
     setPaymentDetails(null);
   };
-
 
   useEffect(() => {
     let result = payments;
@@ -147,21 +143,19 @@ export default function Payments() {
   };
 
   const fetchTotalSpent = async () => {
-  if (!startDate || !endDate) {
-    alert("Please select both start and end dates");
-    return;
-  }
+    if (!startDate || !endDate) {
+      alert("Please select both start and end dates");
+      return;
+    }
 
-  try {
-    const response = await api.get(`/payments?start=${startDate}&end=${endDate}`);
-    setTotalSpent(response.data);
-  } catch (error) {
-    console.error("Error fetching total spent:", error);
-    setTotalSpent(null);
-  }
-};
-
-
+    try {
+      const response = await api.get(`/payments?start=${startDate}&end=${endDate}`);
+      setTotalSpent(response.data);
+    } catch (error) {
+      handleApiError(error, 'Error fetching total spent');
+      setTotalSpent(null);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -184,7 +178,7 @@ export default function Payments() {
         </div>
       </div>
     );
-  }
+  } 
 
   return (
     <div className="payments-container">

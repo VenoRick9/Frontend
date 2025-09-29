@@ -31,7 +31,7 @@ export default function Profile() {
             userId = decodedToken.sub;
         }
     } catch (err) {
-        console.error("Invalid token", err);
+        handleApiError(error, "Invalid token");
     }
 
     useEffect(() => {
@@ -48,7 +48,7 @@ export default function Profile() {
                     birthDate: response.data.birthDate || ""
                 });
             } catch (err) {
-                console.error("Error fetching user:", err);
+                handleApiError(error, "Error fetching user");
             }
         };
 
@@ -89,8 +89,7 @@ export default function Profile() {
             const response = await api.get(`/users/${userId}`);
             setUser(response.data);
         } catch (err) {
-            console.error(err);
-            alert("Failed to add card");
+            handleApiError(error, "Error adding card");
         } finally {
             setIsLoading(false);
         }
@@ -106,8 +105,7 @@ export default function Profile() {
             const response = await api.get(`/users/${userId}`);
             setUser(response.data);
         } catch (err) {
-            console.error(err);
-            alert("Failed to delete card");
+            handleApiError(error, "Error deleting card");
         }
     };
 
@@ -121,8 +119,7 @@ export default function Profile() {
             localStorage.clear();
             window.location.href = "/login";
         } catch (err) {
-            console.error(err);
-            alert("Failed to delete account");
+            handleApiError(error, "Error deleting account");
         }
     };
 
@@ -133,8 +130,8 @@ export default function Profile() {
             setUser(response.data);
             setIsModalOpen(false);
         } catch (err) {
-            console.error(err);
-            alert("Failed to update profile");
+            handleApiError(error, "Error updating profile");
+
         }
     };
 

@@ -54,15 +54,13 @@ export default function Register() {
       window.location.href = "/items";
   } catch (error) {
     if (error.response) {
-      alert(
-        `Error: ${
-          error.response.data.message || "Unable to complete registration"
-        }`
-      );
+      handleApiError(error, "Unable to complete registration");
+      
     } else {
       alert("Failed to connect to the server");
     }
-    console.error("Registration error:", error);
+
+    handleApiError(error, "Error registrating user");
   }
   };
 

@@ -17,7 +17,7 @@ export default function Items() {
       setPage(response.data.page);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error("Error fetching items:", error);
+      handleApiError(error, "Error fetching items");
     }
   };
 

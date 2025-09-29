@@ -10,12 +10,17 @@ import ProtectedRoute from "./ProtectedRoute";
 import { CartProvider } from "./context/CartContext";
 import Payments from "./pages/Payments";
 import AdminItems from "./pages/AdminItems";
+import ErrorBoundary from './components/ErrorBoundary';
+import ApiErrorHandler from './components/ApiErrorHandler';
 
 function App() {
   return (
+  <ErrorBoundary>
     <CartProvider>
       <Router>
+        <ApiErrorHandler/>
         <Header />
+
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -33,6 +38,7 @@ function App() {
         </Routes>
       </Router>
     </CartProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -1,6 +1,7 @@
 import api from "../api";
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaReceipt, FaShoppingBag, FaCalendarAlt } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
 import "../css/Orders.css";
 
 export default function Orders() {
@@ -8,10 +9,24 @@ export default function Orders() {
   const [editingOrder, setEditingOrder] = useState(null);
   const [editedItems, setEditedItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  let userId = null;
+  try {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    userId = decodedToken.sub;
+  }
+  } catch (err) {
+    handleApiError(err, "Invalid token");
+  }
 
   useEffect(() => {
-    const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    setOrders(savedOrders);
+    try {
+      const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+      setOrders(savedOrders);
+    } catch (err) {
+      handleApiError(err, "Error loading orders from storage");
+    }
   }, []);
 
   const handleEditOrder = (order) => {
@@ -24,31 +39,43 @@ export default function Orders() {
     if (window.confirm("Are you sure you want to delete this order?")) {
       const updatedOrders = orders.filter(order => order.id !== orderId);
       setOrders(updatedOrders);
-      localStorage.setItem("orders", JSON.stringify(updatedOrders));
+      try {
+        localStorage.setItem("orders", JSON.stringify(updatedOrders));
+      } catch (err) {
+        handleApiError(err, "Error saving orders to storage");
+      }
     }
   };
 
   const handlePayOrder = async (orderId) => {
-   try {
-    const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    const orderToPay = savedOrders.find((order) => order.id === orderId);
+    try {
+      const userResponse = await api.get(`/users/${userId}`);
+      if (userResponse.data.cards && userResponse.data.cards.length > 0) {
+        const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+        const orderToPay = savedOrders.find((order) => order.id === orderId);
 
-    const requestBody = {
-      orderItems: orderToPay.items.map((item) => ({
-        itemId: item.itemId,
-        quantity: item.quantity.toString(),
-      })),
-    };
+        const requestBody = {
+          orderItems: orderToPay.items.map((item) => ({
+            itemId: item.itemId,
+            quantity: item.quantity.toString(),
+          })),
+        };
 
-    await api.post("/orders", requestBody);
+        await api.post("/orders", requestBody);
 
-    const updatedOrders = savedOrders.filter((order) => order.id !== orderId);
-    localStorage.setItem("orders", JSON.stringify(updatedOrders));
-    setOrders(updatedOrders);
-  } catch (error) {
-    console.error("Error creating order:", error);
-    alert("An error occurred while creating the order. Please try again.");
-  }
+        const updatedOrders = savedOrders.filter((order) => order.id !== orderId);
+        try {
+          localStorage.setItem("orders", JSON.stringify(updatedOrders));
+        } catch (err) {
+          handleApiError(err, "Error updating orders in storage");
+        }
+        setOrders(updatedOrders);
+      } else {
+        alert("The user must have at least one card");
+      }
+    } catch (error) {
+      handleApiError(error, "Error creating order");
+    }
   };
 
   const handleItemQuantityChange = (itemId, newQuantity) => {
@@ -93,7 +120,11 @@ export default function Orders() {
     );
 
     setOrders(updatedOrders);
-    localStorage.setItem("orders", JSON.stringify(updatedOrders));
+    try {
+      localStorage.setItem("orders", JSON.stringify(updatedOrders));
+    } catch (err) {
+      handleApiError(err, "Error saving order changes");
+    }
     
     setIsModalOpen(false);
     setEditingOrder(null);
@@ -105,8 +136,6 @@ export default function Orders() {
     setEditingOrder(null);
     setEditedItems([]);
   };
-
-
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-GB", {

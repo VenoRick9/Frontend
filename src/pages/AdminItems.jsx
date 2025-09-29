@@ -12,7 +12,6 @@ export default function AdminItems() {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
-  
   const fetchItems = async (pageNumber = 0) => {
     try {
       const response = await api.get(`/items?page=${pageNumber}&size=6`);
@@ -20,7 +19,7 @@ export default function AdminItems() {
       setPage(response.data.page);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error("Error fetching items:", error);
+      handleApiError(error, "Error fetching items");
     }
   };
 
@@ -28,7 +27,6 @@ export default function AdminItems() {
     fetchItems();
   }, []);
 
-  
   const openModal = (item = null) => {
     if (item) {
       setEditingItem(item);
@@ -45,13 +43,11 @@ export default function AdminItems() {
     setEditingItem(null);
   };
 
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  
   const handleSave = async () => {
     try {
       if (!formData.name.trim() || !formData.price) {
@@ -65,28 +61,23 @@ export default function AdminItems() {
         await api.post("/items", formData);
       }
 
-      
       fetchItems(page);
       closeModal();
     } catch (error) {
-      console.error("Error saving item:", error);
-      alert("Failed to save item");
+      handleApiError(error, "Error saving item");
     }
   };
 
-  
   const handleDelete = async (itemId) => {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
     try {
       await api.delete(`/items/${itemId}`);
       fetchItems(page);
     } catch (error) {
-      console.error("Error deleting item:", error);
-      alert("Failed to delete item");
+      handleApiError(error, "Error deleting item");
     }
   };
 
-  
   const handlePrevPage = () => {
     if (page > 0) fetchItems(page - 1);
   };
