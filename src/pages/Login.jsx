@@ -38,7 +38,7 @@ export default function Login() {
   return (
     <div
       className="d-flex justify-content-center align-items-center vh-100"
-      style={{ transform: "translateY(-10%)" }}
+      style={{ transform: "translateY(0%)" }}
     >
       <div className="card-custom shadow-lg" style={{ width: "450px" }}>
         <h2 className="text-center mb-4 brand-green">Sign in</h2>

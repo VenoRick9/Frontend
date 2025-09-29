@@ -1,12 +1,11 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import api from "../api";
-import {jwtDecode} from 'jwt-decode';
-import {LocalizationProvider, DatePicker} from "@mui/x-date-pickers";
-import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
-import {enGB} from "date-fns/locale";
-import {FaTrash, FaCreditCard} from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { enGB } from "date-fns/locale";
+import { FaTrash, FaCreditCard } from "react-icons/fa";
 import "../css/Profile.css";
-
 
 export default function Profile() {
     const [user, setUser] = useState(null);
@@ -16,6 +15,13 @@ export default function Profile() {
         expirationDate: ""
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [updateData, setUpdateData] = useState({
+        name: "",
+        surname: "",
+        email: "",
+        birthDate: ""
+    });
 
     let userId = null;
     try {
@@ -35,6 +41,12 @@ export default function Profile() {
             try {
                 const response = await api.get(`/users/${userId}`);
                 setUser(response.data);
+                setUpdateData({
+                    name: response.data.name || "",
+                    surname: response.data.surname || "",
+                    email: response.data.email || "",
+                    birthDate: response.data.birthDate || ""
+                });
             } catch (err) {
                 console.error("Error fetching user:", err);
             }
@@ -43,19 +55,21 @@ export default function Profile() {
         fetchUser();
     }, [userId]);
 
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+        });
+    };
+
     const handleChange = (e) => {
         let value = e.target.value;
-
-
-        if (e.target.name === 'number') {
-
-            value = value.replace(/\D/g, '');
-
-            value = value.replace(/(\d{4})/g, '$1 ').trim();
-
+        if (e.target.name === "number") {
+            value = value.replace(/\D/g, "");
+            value = value.replace(/(\d{4})/g, "$1 ").trim();
             value = value.substring(0, 19);
         }
-
         setCardData({
             ...cardData,
             [e.target.name]: value,
@@ -66,15 +80,12 @@ export default function Profile() {
         e.preventDefault();
         setIsLoading(true);
         try {
-
             const cardDataToSend = {
                 ...cardData,
-                number: cardData.number.replace(/\s/g, '')
+                number: cardData.number.replace(/\s/g, "")
             };
-
-
-            await api.post("/cards", {...cardDataToSend});
-            setCardData({number: "", holder: "", expirationDate: ""});
+            await api.post("/cards", cardDataToSend);
+            setCardData({ number: "", holder: "", expirationDate: "" });
             const response = await api.get(`/users/${userId}`);
             setUser(response.data);
         } catch (err) {
@@ -94,10 +105,36 @@ export default function Profile() {
             await api.delete(`/cards/${cardId}`);
             const response = await api.get(`/users/${userId}`);
             setUser(response.data);
-
         } catch (err) {
             console.error(err);
             alert("Failed to delete card");
+        }
+    };
+
+    const handleDeleteAccount = async () => {
+        if (!window.confirm("Are you sure you want to delete your account?")) {
+            return;
+        }
+
+        try {
+            await api.delete(`/users/${userId}`);
+            localStorage.clear();
+            window.location.href = "/login";
+        } catch (err) {
+            console.error(err);
+            alert("Failed to delete account");
+        }
+    };
+
+    const handleUpdateProfile = async () => {
+        try {
+            await api.patch(`/users/${userId}`, updateData);
+            const response = await api.get(`/users/${userId}`);
+            setUser(response.data);
+            setIsModalOpen(false);
+        } catch (err) {
+            console.error(err);
+            alert("Failed to update profile");
         }
     };
 
@@ -116,13 +153,11 @@ export default function Profile() {
     return (
         <div className="container mt-4 profile-container">
             <div className="row justify-content-between">
-
-
                 <div className="col-md-5 user-info">
                     <h2><FaCreditCard className="me-2"/>Profile</h2>
                     <div className="user-details">
                         <p><strong>Name:</strong> {user.name} {user.surname}</p>
-                        <p><strong>Birth Date:</strong> {user.birthDate}</p>
+                        <p><strong>Birth Date:</strong> {formatDate(user.birthDate)}</p>
                         <p><strong>Email:</strong> {user.email}</p>
                     </div>
 
@@ -144,8 +179,8 @@ export default function Profile() {
                                             <div className="card-details">
                                                 <span className="card-holder">{card.holder}</span>
                                                 <span className="card-expiry">
-                  {formatDateForDisplay(card.expirationDate)}
-                </span>
+                                                    {formatDateForDisplay(card.expirationDate)}
+                                                </span>
                                             </div>
                                         </div>
                                         <button
@@ -225,6 +260,82 @@ export default function Profile() {
                     </form>
                 </div>
             </div>
+
+            
+            <div className="d-flex justify-content-center mt-4 gap-3">
+                <button className="btn btn-success" onClick={() => setIsModalOpen(true)}>
+                    Update Profile
+                </button>
+                <button className="btn btn-danger" onClick={handleDeleteAccount}>
+                    <FaTrash /> Delete Account
+                </button>
+            </div>
+
+            
+            {isModalOpen && (
+                <div className="modal-backdrop-profile">
+                    <div className="modal-content-profile">
+                        <h4>Update Profile</h4>
+                        <div className="mt-2">
+                            <label>Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={updateData.name}
+                                onChange={(e) => setUpdateData({...updateData, name: e.target.value})}
+                            />
+                        </div>
+
+                        <div className="mt-2">
+                            <label>Surname</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={updateData.surname}
+                                onChange={(e) => setUpdateData({...updateData, surname: e.target.value})}
+                            />
+                        </div>
+
+                        <div className="mt-2">
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                value={updateData.email}
+                                onChange={(e) => setUpdateData({...updateData, email: e.target.value})}
+                            />
+                        </div>
+
+                        <div className="mt-2">
+                            <label>Birth Date</label>
+                            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
+                                <DatePicker
+                                    value={updateData.birthDate ? new Date(updateData.birthDate) : null}
+                                    onChange={(date) =>
+                                        setUpdateData({
+                                            ...updateData,
+                                            birthDate: date ? date.toISOString().split("T")[0] : "",
+                                        })
+                                    }
+                                    format="dd/MM/yyyy"
+                                    slotProps={{
+                                        textField: { fullWidth: true },
+                                    }}
+                                />
+                            </LocalizationProvider>
+                        </div>
+
+                        <div className="d-flex justify-content-end gap-2 mt-3">
+                            <button className="btn btn-secondary" onClick={() => setIsModalOpen(false)}>
+                                Cancel
+                            </button>
+                            <button className="btn btn-success" onClick={handleUpdateProfile}>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

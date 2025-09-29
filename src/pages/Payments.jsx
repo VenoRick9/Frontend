@@ -23,6 +23,10 @@ export default function Payments() {
   const [orderDetails, setOrderDetails] = useState(null);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [totalSpent, setTotalSpent] = useState(null);
+
 
 
   useEffect(() => {
@@ -142,6 +146,20 @@ export default function Payments() {
     }).format(amount);
   };
 
+  const fetchTotalSpent = async () => {
+  if (!startDate || !endDate) {
+    alert("Please select both start and end dates");
+    return;
+  }
+
+  try {
+    const response = await api.get(`/payments?start=${startDate}&end=${endDate}`);
+    setTotalSpent(response.data);
+  } catch (error) {
+    console.error("Error fetching total spent:", error);
+    setTotalSpent(null);
+  }
+};
 
 
 
@@ -184,6 +202,7 @@ export default function Payments() {
       </div>
 
       
+      
       <div className="filters-section">
         <div className="search-box">
           <FaSearch className="search-icon" />
@@ -195,11 +214,11 @@ export default function Payments() {
             className="search-input"
           />
         </div>
-        
+
         <div className="filter-group">
           <FaFilter className="filter-icon" />
-          <select 
-            value={statusFilter} 
+          <select
+            value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="status-filter"
           >
@@ -208,6 +227,38 @@ export default function Payments() {
             <option value="FAILED">Failed</option>
           </select>
         </div>
+      </div>
+
+      
+      <div className="date-filter-section">
+        <FaCalendarAlt className="filter-icon" />
+        <label>From:</label>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          className="date-input"
+        />
+        <label>To:</label>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          className="date-input"
+        />
+        <button className="btn btn-green" onClick={fetchTotalSpent}>
+          Show Total
+        </button>
+
+        {totalSpent !== null && (
+          <div className="total-spent">
+            <strong>Total Spent:</strong>{" "}
+            {new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(totalSpent)}
+          </div>
+        )}
       </div>
 
       

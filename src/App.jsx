@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import ProtectedRoute from "./ProtectedRoute";
 import { CartProvider } from "./context/CartContext";
 import Payments from "./pages/Payments";
+import AdminItems from "./pages/AdminItems";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/payments" element={<Payments />} />
+            <Route path="/admin/items" element={<AdminItems />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/login" replace />} />

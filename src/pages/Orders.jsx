@@ -46,7 +46,7 @@ export default function Orders() {
     localStorage.setItem("orders", JSON.stringify(updatedOrders));
     setOrders(updatedOrders);
   } catch (error) {
-    console.error("❌ Error creating order:", error);
+    console.error("Error creating order:", error);
     alert("An error occurred while creating the order. Please try again.");
   }
   };

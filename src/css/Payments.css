@@ -62,11 +62,11 @@
 
 .filters-section {
   display: flex;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   flex-wrap: wrap;
-
+  margin-bottom: 20px; 
 }
 
 .search-box {
@@ -771,4 +771,71 @@ margin-top: 0.8rem;
     flex-direction: column;
     gap: 0.3rem;
   }
+}
+
+
+
+
+
+
+.date-filter-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+
+.date-filter-section {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 15px;
+}
+
+
+
+.date-input {
+  padding: 8px 12px;
+  border: 1.5px solid #28a745;
+  border-radius: 8px;
+  background-color: #6c757d;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.date-input:focus {
+  border-color: #218838;
+  outline: none;
+  box-shadow: 0 0 4px rgba(40, 167, 69, 0.3);
+}
+
+
+.btn-green {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-green:hover {
+  background-color: #218838;
+}
+
+
+.total-spent {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #28a745;
+  padding-left: 2px;
 }
