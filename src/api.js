@@ -1,7 +1,7 @@
 import axios from "axios";
 import { dispatchApiError } from './components/ApiErrorHandler';
 
-const API_URL = window.__API_URL__;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: API_URL,
