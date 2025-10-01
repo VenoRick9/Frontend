@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import api from "../api";
+import api, { handleApiError } from "../api";
 import { CartContext } from "../context/CartContext";
 import "../css/Items.css";
 

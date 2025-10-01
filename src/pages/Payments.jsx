@@ -5,7 +5,7 @@ import {
   FaSearch, FaExclamationTriangle, FaCheckCircle, FaClock, 
   FaFilter, FaTimes, FaUser, FaEnvelope, FaIdCard, FaBox 
 } from 'react-icons/fa';
-import api from '../api';
+import api, { handleApiError } from '../api';
 import '../css/Payments.css';
 
 export default function Payments() {

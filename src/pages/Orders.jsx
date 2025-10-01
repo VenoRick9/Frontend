@@ -1,4 +1,4 @@
-import api from "../api";
+import api, { handleApiError } from "../api";
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaReceipt, FaShoppingBag, FaCalendarAlt } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";

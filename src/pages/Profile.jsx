@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api";
+import api, { handleApiError } from "../api";
 import { jwtDecode } from "jwt-decode";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -31,7 +31,7 @@ export default function Profile() {
             userId = decodedToken.sub;
         }
     } catch (err) {
-        handleApiError(error, "Invalid token");
+        handleApiError(err, "Invalid token");
     }
 
     useEffect(() => {
@@ -48,7 +48,7 @@ export default function Profile() {
                     birthDate: response.data.birthDate || ""
                 });
             } catch (err) {
-                handleApiError(error, "Error fetching user");
+                handleApiError(err, "Error fetching user");
             }
         };
 
@@ -89,7 +89,7 @@ export default function Profile() {
             const response = await api.get(`/users/${userId}`);
             setUser(response.data);
         } catch (err) {
-            handleApiError(error, "Error adding card");
+            handleApiError(err, "Error adding card");
         } finally {
             setIsLoading(false);
         }
@@ -105,7 +105,7 @@ export default function Profile() {
             const response = await api.get(`/users/${userId}`);
             setUser(response.data);
         } catch (err) {
-            handleApiError(error, "Error deleting card");
+            handleApiError(err, "Error deleting card");
         }
     };
 
@@ -119,7 +119,7 @@ export default function Profile() {
             localStorage.clear();
             window.location.href = "/login";
         } catch (err) {
-            handleApiError(error, "Error deleting account");
+            handleApiError(err, "Error deleting account");
         }
     };
 
@@ -130,7 +130,7 @@ export default function Profile() {
             setUser(response.data);
             setIsModalOpen(false);
         } catch (err) {
-            handleApiError(error, "Error updating profile");
+            handleApiError(err, "Error updating profile");
 
         }
     };

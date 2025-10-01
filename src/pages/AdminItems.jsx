@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../api";
+import api, { handleApiError } from "../api";
 import "../css/AdminItems.css";
 
 export default function AdminItems() {

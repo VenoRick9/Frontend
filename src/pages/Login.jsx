@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../api";
+import api, { handleApiError } from "../api";
 
 export default function Login() {
   const [login, setLogin] = useState("");
