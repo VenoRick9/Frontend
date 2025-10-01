@@ -24,7 +24,7 @@ export default function Login() {
       window.location.href = "/items";
     } catch (error) {
       if (error.response) {
-        handleApiError(error, "Wrong login or password");
+        await handleApiError(error, "Wrong login or password");
       } else {
         alert("Something wrong with connection");
       }
