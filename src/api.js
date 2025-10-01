@@ -8,7 +8,7 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// Request interceptor
+
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
@@ -18,7 +18,7 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    // Обработка ошибок запроса
+    
     dispatchApiError({
       message: "Request configuration error",
       error: error
@@ -27,13 +27,13 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor
+
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Обработка 401 ошибки (токен истек)
+    
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -60,7 +60,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         console.error("Ошибка при обновлении токена:", refreshError);
         
-        // Диспатч ошибки обновления токена
+        
         dispatchApiError({
           message: "Session expired. Please login again.",
           error: refreshError
@@ -73,7 +73,7 @@ api.interceptors.response.use(
       }
     }
 
-    // Обработка других ошибок
+
     const errorMessage = getErrorMessage(error);
     dispatchApiError({
       message: errorMessage,
@@ -85,7 +85,7 @@ api.interceptors.response.use(
   }
 );
 
-// Функция для получения понятного сообщения об ошибке
+
 const getErrorMessage = (error) => {
   if (error.response?.data?.message) {
     return error.response.data.message;
@@ -128,14 +128,14 @@ const getErrorMessage = (error) => {
   }
 };
 
-// Вспомогательные функции для ручного диспатча ошибок
+
 export const handleApiError = (error, customMessage = null) => {
   const message = customMessage || getErrorMessage(error);
   dispatchApiError({ message, error });
   return Promise.reject(error);
 };
 
-// Функция для безопасных запросов с обработкой ошибок
+
 export const safeApiCall = async (apiCall, customErrorMessage = null) => {
   try {
     const response = await apiCall();
