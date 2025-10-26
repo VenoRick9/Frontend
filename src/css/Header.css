@@ -1,0 +1,52 @@
+.custom-header {
+  position: sticky; 
+  top: 0;
+  z-index: 1000;
+  background: linear-gradient(90deg, #149a2b, #0f9521);
+  border-radius: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-weight: 600;
+}
+
+.custom-header .btn {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  width: 4.5rem;
+}
+
+.custom-header .btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: white;
+}
+
+.site-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.site-logo:hover {
+  color: #3a603a;
+  text-decoration: none; 
+}
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #ffc107; 
+  color: black;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  border: 1px solid white;
+  transition: transform 0.2s ease;
+}
+
+.cart-badge.animate {
+  transform: scale(1.3);
+}

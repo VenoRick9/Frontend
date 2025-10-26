@@ -1,0 +1,45 @@
+.btn-add-green {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+
+.btn-add-green:hover {
+  background-color: #218838;
+  transform: scale(1.025);
+}
+
+.btn-add-green.clicked {
+  background-color: #1e7e34; 
+  transform: scale(1.05);
+}
+
+
+.pagination-container {
+  margin-top: 20px;
+}
+
+.btn-page {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-page:hover {
+  background-color: #218838; 
+}
+
+.btn-page:disabled {
+  background-color: #9fd3aa;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  font-weight: 600;
+  color: #333;
+}
