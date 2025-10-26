@@ -7,7 +7,7 @@ export default function Header() {
   const location = useLocation();
   const { cart } = useContext(CartContext);
 
-  if (location.pathname === "/login" || location.pathname === "/register") {
+  if (location.pathname === "/login" || location.pathname === "/register"|| location.pathname === "/innowise-shop") {
     return null;
   }
 

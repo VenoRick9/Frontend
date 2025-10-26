@@ -35,34 +35,41 @@ export default function Register() {
   const handleBack = () => setStep(1);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!formData.email || !formData.name || !formData.surname || !formData.birthDate) {
-      alert("Please fill in all fields");
-      return;
-    }
-    try {
+  e.preventDefault();
 
-      const response = await api.post("/auth/registration", formData);
-
-      const { accessToken, refreshToken } = response.data;
-
-
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
-
-
-      window.location.href = "/items";
-  } catch (error) {
-    if (error.response) {
-      handleApiError(error, "Unable to complete registration");
-      
-    } else {
-      alert("Failed to connect to the server");
-    }
-
-    handleApiError(error, "Error registrating user");
+  // Валидация всех полей
+  if (!formData.email || !formData.name || !formData.surname || !formData.birthDate || !formData.login || !formData.password) {
+    alert("Please fill in all fields");
+    return;
   }
-  };
+
+  try {
+    const kcUser = {
+      username: formData.login,
+      email: formData.email,
+      firstName: formData.name,
+      lastName: formData.surname,
+      password: formData.password,
+    };
+
+  
+const payload = {
+  name: formData.name,
+  surname: formData.surname,
+  birthDate: formData.birthDate,
+  email: formData.email,
+  login: formData.login,
+  password: formData.password
+};
+
+    await api.post("/auth/registration", payload);
+
+    window.location.href = "/login";
+
+  } catch (error) {
+    handleApiError(error, "Unable to complete registration");
+  }
+};
 
   return (
     <div
