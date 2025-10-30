@@ -5,6 +5,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { enGB } from "date-fns/locale";
 import { FaTrash, FaCreditCard } from "react-icons/fa";
+import {sleep} from "../utils/utils"
 import "../css/Profile.css";
 
 export default function Profile() {
@@ -86,6 +87,7 @@ export default function Profile() {
             };
             await api.post("/cards", cardDataToSend);
             setCardData({ number: "", holder: "", expirationDate: "" });
+            await sleep(1000);
             const response = await api.get(`/users/${userId}`);
             setUser(response.data);
         } catch (err) {
@@ -102,6 +104,7 @@ export default function Profile() {
 
         try {
             await api.delete(`/cards/${cardId}`);
+            await sleep(1000);
             const response = await api.get(`/users/${userId}`);
             setUser(response.data);
         } catch (err) {
@@ -115,8 +118,9 @@ export default function Profile() {
         }
 
         try {
-            await api.delete(`/users/${userId}`);
+            await api.delete(`/gateway/users/${userId}`);
             localStorage.clear();
+            console.log("we are here")
             window.location.href = "/login";
         } catch (err) {
             handleApiError(err, "Error deleting account");
