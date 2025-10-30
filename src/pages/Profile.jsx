@@ -121,7 +121,7 @@ export default function Profile() {
             await api.delete(`/gateway/users/${userId}`);
             localStorage.clear();
             console.log("we are here")
-            window.location.href = "/login";
+            window.location.href = "/innowise-shop";
         } catch (err) {
             handleApiError(err, "Error deleting account");
         }
